@@ -1,0 +1,10 @@
+{
+  "name": "com.wesleyrideout.eazysoundmanager",
+  "version": "1.0.0",
+  "displayName": "Eazy Sound Manager",
+  "description": "A sound and music management tool.",
+  "unity": "2020.3",
+  "author": {
+    "name": "Wesley Rideout"
+  }
+}
