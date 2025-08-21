@@ -178,7 +178,7 @@ namespace Eazy_Sound_Manager
 		#region Prepare Function
 
 		private static int PrepareAudio(AudioMixerGroup audioMixerGroup, AudioClip clip, float volume, bool loop, bool persist, float fadeInSeconds,
-			float fadeOutSeconds, Transform sourceTransform)
+			float fadeOutSeconds, GameObject sourceObject)
 		{
 			if (clip == null) Debug.LogError("[Eazy Sound Manager] Audio clip is null", clip);
 
@@ -192,7 +192,7 @@ namespace Eazy_Sound_Manager
 			}
 
 			// Create the audioSource
-			Audio audio = soundGroup.GetNewAudio(clip, loop, persist, volume, fadeInSeconds, fadeOutSeconds, sourceTransform);
+			Audio audio = soundGroup.GetNewAudio(clip, loop, persist, volume, fadeInSeconds, fadeOutSeconds, sourceObject);
 			return audio.AudioID;
 		}
 
@@ -202,11 +202,11 @@ namespace Eazy_Sound_Manager
 
 		public static int Play(AudioMixerGroup audioMixerGroup, AudioClip clip, float volume = 1f, bool loop = false, bool persist = false,
 			float fadeInSeconds = 0f,
-			float fadeOutSeconds = 0f, Transform sourceTransform = null)
+			float fadeOutSeconds = 0f, GameObject sourceObject = null)
 		{
 			audioMixerGroup = DefaultGroupIfNull(audioMixerGroup);
 
-			int audioID = PrepareAudio(audioMixerGroup, clip, volume, loop, persist, fadeInSeconds, fadeOutSeconds, sourceTransform);
+			int audioID = PrepareAudio(audioMixerGroup, clip, volume, loop, persist, fadeInSeconds, fadeOutSeconds, sourceObject);
 
 			if (TryGetAudio(audioMixerGroup, audioID, out Audio audio))
 				audio.Play();

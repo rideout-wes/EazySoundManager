@@ -5,7 +5,7 @@ namespace Eazy_Sound_Manager.PlaySoundHelpers
 	public class PlaySoundComponent : MonoBehaviour, IPlaySoundHelper
 	{
 		[SerializeField] private PlaySoundScriptable sound;
-		[SerializeField] private Transform sourceTransform;
+		[SerializeField] private GameObject sourceObject;
 
 		[SerializeField] private bool muteImmediately;
 
@@ -16,7 +16,7 @@ namespace Eazy_Sound_Manager.PlaySoundHelpers
 
 		public void Play()
 		{
-			sound.Play(sourceTransform);
+			sound.Play(sourceObject);
 		}
 
 		public void Pause()
@@ -57,7 +57,7 @@ namespace Eazy_Sound_Manager.PlaySoundHelpers
 
 		private void Play_Internal()
 		{
-			sound.Play(sourceTransform);
+			sound.Play(sourceObject);
 			if (muteImmediately)
 				sound.Mute();
 		}

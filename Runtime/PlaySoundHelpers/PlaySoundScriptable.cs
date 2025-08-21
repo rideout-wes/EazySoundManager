@@ -27,11 +27,11 @@ namespace Eazy_Sound_Manager.PlaySoundHelpers
 			Play(null);
 		}
 
-		public void Play(Transform sourceTransform)
+		public void Play(GameObject sourceObject)
 		{
 			if (!EazySoundManager.TryGetAudio(audioMixerGroup, playingAudioId, out playingAudio))
 			{
-				playingAudioId = EazySoundManager.Play(audioMixerGroup, audioClip, volume, loop, persist, fadeInDuration, fadeOutDuration, sourceTransform);
+				playingAudioId = EazySoundManager.Play(audioMixerGroup, audioClip, volume, loop, persist, fadeInDuration, fadeOutDuration, sourceObject);
 				EazySoundManager.TryGetAudio(audioMixerGroup, playingAudioId, out playingAudio);
 				return;
 			}

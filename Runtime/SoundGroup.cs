@@ -25,10 +25,13 @@ namespace Eazy_Sound_Manager
 			audioPool = new ObjectPool<Audio>(CreateFunc_Audio, ActionOnGet_Audio, ActionOnRelease_Audio, ActionOnDestroy_Audio);
 		}
 
-		public Audio GetNewAudio(AudioClip clip, bool loop, bool persist, float volume, float fadeInValue, float fadeOutValue, Transform sourceTransform)
+		public Audio GetNewAudio(AudioClip clip, bool loop, bool persist, float volume, float fadeInValue, float fadeOutValue, GameObject sourceObject)
 		{
 			Audio audio = audioPool.Get();
-			audio.Initialize(clip, loop, persist, volume, fadeInValue, fadeOutValue, sourceTransform);
+			AudioSource audioSourceToUse = AddNewAudioSource(sourceObject);
+			audio.Initialize(audioSourceToUse, clip, loop, persist, volume, fadeInValue, fadeOutValue);
+			audio.SetSpacialBlendForSourceObject(sourceObject);
+			
 			groupAudios.Add(audio.AudioID, audio);
 
 			return audio;
@@ -67,13 +70,21 @@ namespace Eazy_Sound_Manager
 
 		public Audio this[int id] => groupAudios[id];
 
+		private AudioSource AddNewAudioSource(GameObject sourceObject)
+		{
+			GameObject objectForAudioSource = sourceObject != null ? sourceObject : defaultAudioSourceObject;
+			AudioSource audioSource = objectForAudioSource.AddComponent<AudioSource>();
+
+			audioSource.outputAudioMixerGroup = audioMixerGroup;
+
+			return audioSource;
+		}
+
 		#region AudioPool
 
 		private Audio CreateFunc_Audio()
 		{
-			AudioSource audioSource = defaultAudioSourceObject.AddComponent<AudioSource>();
-			audioSource.outputAudioMixerGroup = audioMixerGroup;
-			return new Audio(audioSource);
+			return new Audio();
 		}
 
 		private void ActionOnGet_Audio(Audio obj)

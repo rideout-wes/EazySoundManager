@@ -17,7 +17,6 @@ namespace Eazy_Sound_Manager.AudioMixerGroups
 		[field: NonSerialized]
 		public IReadOnlyList<AudioMixerGroup> AllAudioMixerGroups { get; private set; }
 
-		[field: NonSerialized]
 		public IReadOnlyDictionary<AudioMixerGroup, VolumeData> GroupToVolumeData => groupToVolumeData;
 
 		[NonSerialized]

@@ -44,27 +44,6 @@ namespace Eazy_Sound_Manager
 		public AudioSource AudioSource { get; private set; }
 
 		/// <summary>
-		///     The source transform of the audio.
-		/// </summary>
-		public Transform SourceTransform
-		{
-			get { return sourceTransform; }
-			set
-			{
-				if (value == null)
-				{
-					sourceTransform = EazySoundManager.Gameobject.transform;
-					SpatialBlend = 0;
-				}
-				else
-				{
-					sourceTransform = value;
-					SpatialBlend = 1;
-				}
-			}
-		}
-
-		/// <summary>
 		///     Audio clip to play/is playing
 		/// </summary>
 		public AudioClip Clip
@@ -271,15 +250,6 @@ namespace Eazy_Sound_Manager
 		private float tempFadeSeconds;
 		private float fadeInterpolater;
 		private float onFadeStartVolume;
-		private Transform sourceTransform;
-
-		public Audio(AudioSource audioSource)
-		{
-			// Initialize values
-			AudioSource = audioSource;
-
-			SetDefaultValues();
-		}
 
 		public void GenerateNewAudioID()
 		{
@@ -314,17 +284,12 @@ namespace Eazy_Sound_Manager
 			Activated = false;
 		}
 
-		public Audio(AudioSource audioSource, AudioClip clip, bool loop, bool persist, float volume, float fadeInValue, float fadeOutValue,
-			Transform sourceTransform) : this(audioSource)
+		public void Initialize(AudioSource audioSource, AudioClip clip, bool loop, bool persist, float volume, float fadeInValue, float fadeOutValue)
 		{
-			Initialize(clip, loop, persist, volume, fadeInValue, fadeOutValue, sourceTransform);
-		}
+			AudioSource = audioSource;
 
-		public void Initialize(AudioClip clip, bool loop, bool persist, float volume, float fadeInValue, float fadeOutValue, Transform sourceTransform)
-		{
 			// Initialize values
 			Clip = clip;
-			SourceTransform = sourceTransform;
 			Loop = loop;
 			Persist = persist;
 			targetVolume = volume;
